@@ -21,6 +21,19 @@ A fast, lightweight, and portable desktop application for batch converting image
 - **Dark/Light Theme**: Modern UI with theme switching
 - **Drag & Drop**: Simply drop files into the application
 - **Portable**: No installation required, settings stored in User Config Directory
+- **Zero Dependency**: Official release bundles all necessary runtimes (Visual C++ Redistributable included)
+
+## System Requirements (Windows)
+
+**The official release (Full Bundle) requires NO installation.**
+It includes all necessary runtime libraries (VS Redistributable + Dependencies), so it works out-of-the-box on any standard Windows 10/11 system.
+
+**For Manual Builds / Minimal Distribution Only:**
+If you are running a bare executable without the bundled folder, you will need:
+
+1.  **Windows 10/11 (64-bit)**
+2.  **Microsoft Visual C++ Redistributable (x64)**
+    - Download: [https://aka.ms/vs/17/release/vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 ## How It Works
 
@@ -82,7 +95,16 @@ Before building, ensure you have:
    sudo dnf install libheif-devel lcms2-devel libwebp-devel
    ```
 
-## Building
+### Automated Build (Windows)
+
+A dedicated script is available to automate the verified release build process, including dependency bundling:
+
+1.  Ensure `VCPKG_ROOT` environment variable is set (e.g., `set VCPKG_ROOT=C:\path\to\vcpkg`).
+2.  Run `build_release_windows.bat`.
+
+The fully portable distribution will be created in the `build_release_windows` folder.
+
+### Manual Build
 
 ```bash
 # Development
@@ -101,15 +123,21 @@ The executable will be at:
 
 ### Windows
 
-Copy these files to the same folder:
+**Recommended:** Use `build_release_windows.bat` to automatically bundle all required files.
 
-| File                             | Required         |
-| -------------------------------- | ---------------- |
-| `simple-image-converter-app.exe` | Yes              |
-| `heif.dll`                       | For HEIC support |
-| `libde265.dll`                   | For HEIC support |
+If building manually, copy these files to the same folder:
 
-DLLs are located in `vcpkg/installed/x64-windows/bin/`
+| File                             | Required                           |
+| -------------------------------- | ---------------------------------- |
+| `simple-image-converter-app.exe` | Yes                                |
+| `heif.dll`                       | For HEIC support                   |
+| `libde265.dll`                   | For HEIC support                   |
+| `libx265.dll`                    | For HEIC support (Hard Dependency) |
+| `vcruntime140.dll`               | Visual C++ Runtime                 |
+| `vcruntime140_1.dll`             | Visual C++ Runtime                 |
+| `msvcp140.dll`                   | Visual C++ Runtime                 |
+
+DLLs are located in `vcpkg/installed/x64-windows/bin/` and `System32`.
 
 ### macOS / Linux
 
