@@ -60,7 +60,12 @@ copy /Y "%SYS32%\vcruntime140_1.dll" "%OUTPUT_DIR%\" >nul
 copy /Y "%SYS32%\msvcp140.dll" "%OUTPUT_DIR%\" >nul
 
 echo.
+echo.
 echo [4/4] Finalizing...
+
+:: Copy Utility Scripts
+echo   - Copying cleanup script...
+copy /Y "scripts\cleanup_settings_windows.bat" "%OUTPUT_DIR%\" >nul
 
 echo.
 echo ===================================================
